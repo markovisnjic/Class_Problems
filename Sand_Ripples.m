@@ -53,14 +53,14 @@ else
 
 end
 z = (pi*N*D^2)/(4*(1-porosity)*dx);
-z = max(z0,z);
+%z = max(z0,z);
 hold on
 %plot(x,particle_wind)
 plot(x/100,z,'k')
 hold off
 ylabel('Height (m)','FontSize',24,'fontname','arial')
 xlabel('Distance (m)','FontSize',24,'fontname','arial')
-
+axis([0,xmax/100,0.1,0.101])
 %pause(0.1)
 drawnow
 %end
