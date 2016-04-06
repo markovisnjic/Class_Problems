@@ -12,26 +12,23 @@ S = 10^7; %m^-2/s^-1
 %% Arrays
 
 D = 0.005; % grain diameter
-dx = 5; % make these bins much bigger than your grains
+dx = 5; 
 xmax = 1000;
-x = 0:dx:xmax;
+x =0:dx:xmax;
 
 g_remove = 10; %Grains removed with impact
 g_hop = 5*dx; %How far grains go after ejection
 
-% here is how i propose you make your initial topo and 
-% back out how many grains are in each bin
-z0=1;
-z = z0+0.01*rand(size(x)); % random topography with a st dev 0.01
-
+z0=0.1;
+%z = z0+0.01*rand(size(x)); % random topography with a st dev 0.01
+z = z0*ones(size(x));
 porosity = 0.35;
-N = ceil(dx*z*(1-porosity)/(pi*D*D/4)); % number of grains in each bin. this is simply geometry
-% see equation 2 in the ripple paper from 1990
-
+N = ceil(dx*z*(1-porosity)/(pi*D*D/4)); % number of grains in each bin.
+z = (pi*N*D^2)/(4*(1-porosity)*dx);
 
 % Number of Impacts
 dt = 1;
-tmax = 1000;
+tmax = 100000;
 t = 0:dt:tmax;
 imax =length(t);
 
@@ -42,9 +39,7 @@ for i=1:imax
 particle_wind = 0.01*((xmax)*rand-x); %generate the particle trajectories
 
 intercept = find(particle_wind < z); %find locations where the particle wind impacts the topo
-%if (numel(intercept==0)) %in case sand is not hit
-
-%else    
+  
 Impact_Location = intercept(1); % take the first index as the impact point
 
    
@@ -58,10 +53,13 @@ else
 
 end
 z = (pi*N*D^2)/(4*(1-porosity)*dx);
-
+z = max(z0,z);
 hold on
-plot(x,particle_wind)
-plot(x,z,'k')
+%plot(x,particle_wind)
+plot(x/100,z,'k')
+hold off
+ylabel('Height (m)','FontSize',24,'fontname','arial')
+xlabel('Distance (m)','FontSize',24,'fontname','arial')
 
 %pause(0.1)
 drawnow
