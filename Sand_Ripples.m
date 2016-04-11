@@ -11,7 +11,7 @@ S = 10^7; %m^-2/s^-1
 
 %% Arrays
 
-D = 0.005; % grain diameter
+D = 0.025; % grain diameter
 dx = 5; 
 xmax = 1000;
 x =0:dx:xmax;
@@ -20,8 +20,8 @@ g_remove = 10; %Grains removed with impact
 g_hop = 5*dx; %How far grains go after ejection
 
 z0=0.1;
-%z = z0+0.01*rand(size(x)); % random topography with a st dev 0.01
-z = z0*ones(size(x));
+z = z0+0.01*rand(size(x)); % random topography with a st dev 0.01
+%z = z0*ones(size(x));
 porosity = 0.35;
 N = ceil(dx*z*(1-porosity)/(pi*D*D/4)); % number of grains in each bin.
 z = (pi*N*D^2)/(4*(1-porosity)*dx);
@@ -54,13 +54,13 @@ else
 end
 z = (pi*N*D^2)/(4*(1-porosity)*dx);
 %z = max(z0,z);
-hold on
+%hold on
 %plot(x,particle_wind)
 plot(x/100,z,'k')
-hold off
+%hold off
 ylabel('Height (m)','FontSize',24,'fontname','arial')
 xlabel('Distance (m)','FontSize',24,'fontname','arial')
-axis([0,xmax/100,0.1,0.101])
+%axis([0,xmax/100,0.1,])
 %pause(0.1)
 drawnow
 %end
